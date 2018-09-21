@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "html-template-tag": "^2.0.0",
+    "layout": "^2.2.0",
     "morgan": "^1.9.1",
     "pg": "^7.4.3",
     "pg-hstore": "^2.3.2",

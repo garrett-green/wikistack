@@ -3,6 +3,8 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const path = require('path');
 const models = require('./models');
+const wikiRouter = require('./routes/wiki');
+const userRouter = require('./routes/user');
 
 
 const app = express();
@@ -15,6 +17,9 @@ models.db.authenticate().
 then(() => {
   console.log('connected to the database');
 })
+
+app.use('/wiki', wikiRouter);
+
 
 app.get("/", (req, res) =>  {
   res.send('');
