@@ -1,19 +1,36 @@
 const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const path = require('path');
+const models = require('./models');
+
 
 const app = express();
 
 app.use(morgan("dev"));
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: false}))
 
-app.get("/", (req, res) =>  {
-  res.send('hello world!');
+models.db.authenticate().
+then(() => {
+  console.log('connected to the database');
 })
 
-const PORT = 1337;
+app.get("/", (req, res) =>  {
+  res.send('');
+})
 
-app.listen(PORT, () => {
-  console.log(`App listening in port ${PORT}`);
-});
+const PORT = 3000;
+
+const init = async () =>  {
+  await models.db.sync({force: true})
+  // await models.User.sync()
+  // await models.Page.sync()
+  app.listen(PORT, () => {
+    console.log(`App listening in port ${PORT}`);
+  });
+}
+
+init();
+
+
