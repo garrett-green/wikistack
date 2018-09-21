@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize');
 const db = new Sequelize('postgres://localhost:5432/wikistack');
+const slug = require('../slugGenerator');
 
 const Page = db.define('page', {
   title: {
@@ -17,6 +18,10 @@ const Page = db.define('page', {
   status: {
     type: Sequelize.ENUM('open', 'closed')
   }
+});
+
+Page.beforeCreate((pageInstance) => {
+  pageInstance.slug = slug(pageInstance.slug);
 });
 
 const User = db.define('user', {
